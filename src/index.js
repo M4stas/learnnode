@@ -1,14 +1,16 @@
 import { createApp } from 'vue';
 
 
-import { createMemoryHistory ,createWebHashHistory ,createWebHistory ,createRouter } from 'vue-router'
+import { createMemoryHistory, createWebHashHistory, createWebHistory, createRouter } from 'vue-router'
 
 import ToDo from './pages/ToDo.vue';
 import Modals from './pages/Modals.vue';
+import Messages from './pages/Messages.vue';
 
 const routes = [
-    { path: '/', component: ToDo},
-    { path: '/modals', component: Modals },
+    { path: '/', component: ToDo, name: 'Todolist' },
+    { path: '/modals', component: Modals, name: 'Modals' },
+    { path: '/messages', component: Messages, name: 'Messages' }
 ]
 
 export const router = createRouter({
