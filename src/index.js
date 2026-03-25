@@ -14,7 +14,8 @@ const routes = [
     { path: '/modals', component: Modals, name: 'Modals' },
     { path: '/messages', component: Messages, name: 'Messages' },
     { path: '/buttons', component: Buttons, name: 'Buttons' },
-    { path: '/chuck', component: ChuckNorris, name: 'Chuck Norris' }
+    { path: '/chuck', component: ChuckNorris, name: 'Chuck Norris' },
+    { path: '/rick', component: Rickandmorty, name: 'Rick and morty' }
 ]
 
 export const router = createRouter({
@@ -23,6 +24,7 @@ export const router = createRouter({
 })
 
 import App from './App.vue';
+import Rickandmorty from './pages/Rickandmorty.vue';
 
 const app = createApp(App);
 app.use(router)
