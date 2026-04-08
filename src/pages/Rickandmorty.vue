@@ -63,8 +63,16 @@ let pages = computed(() => {
     return pages.filter(p => p);
 });
 
+//debounce
+let searchTimeout = null
+
 async function search() {
-    await getCharacters(1);
+    clearTimeout(searchTimeout)
+    searchTimeout = setTimeout(async () => {
+        await getCharacters(1)
+    }, 1000);
+
+
 }
 
 </script>
@@ -74,8 +82,7 @@ async function search() {
 
         <div class="field has-addons">
             <div class="control is-expanded">
-                <input @keydown.enter="search" v-model="searchInput" class="input" type="text"
-                    placeholder="Find a character">
+                <input @input="search" v-model="searchInput" class="input" type="text" placeholder="Find a character">
             </div>
             <div class="control">
                 <button class="button is-info" @click="search">
