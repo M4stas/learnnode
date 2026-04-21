@@ -16,7 +16,6 @@ defineProps(['character'])
         </div>
         <div class="card-content">
 
-
             <div class="content">
                 <table>
                     <tbody>

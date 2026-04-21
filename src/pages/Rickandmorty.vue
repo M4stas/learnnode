@@ -13,23 +13,33 @@ let pagination = ref({
 })
 
 let current = ref(1);
+let isLoading = ref(false);
 
 let searchInput = ref('')
+
+let selectedGender = ref('')
+let selectedStatus = ref('')
 
 await getCharacters(current.value)
 
 async function getCharacters(page) {
     current.value = page;
-    let res = await axios.get('https://rickandmortyapi.com/api/character', {
-        params: {
-            page: page,
-            name: searchInput.value
-        }
-    });
+    isLoading.value = true;
+    try {
+        let res = await axios.get('https://rickandmortyapi.com/api/character', {
+            params: {
+                page: page,
+                name: searchInput.value,
+                gender: selectedGender.value,
+                status: selectedStatus.value
+            }
+        });
 
-    console.log(res.data);
-    characters.value = res.data.results;
-    pagination.value = res.data.info;
+        characters.value = res.data.results;
+        pagination.value = res.data.info;
+    } finally {
+        isLoading.value = false;
+    }
 }
 
 async function next() {
@@ -72,13 +82,72 @@ async function search() {
         await getCharacters(1)
     }, 1000);
 
+}
 
+function setStatus(status) {
+    selectedStatus.value = selectedStatus.value === status ? '' : status
+    getCharacters(1)
+}
+
+function setGender(gender) {
+    selectedGender.value = selectedGender.value === gender ? '' : gender
+    getCharacters(1)
+}
+
+function clearAll() {
+    selectedStatus.value = ''
+    selectedGender.value = ''
+    searchInput.value = ''
+    getCharacters(1)
 }
 
 </script>
 
 <template>
     <div class="container">
+
+        <nav class="level">
+            <div class="level-left">
+                <div class="level-item">
+                    <p class="subtitle is-5"><strong>Status:</strong></p>
+                </div>
+                <div class="level-item">
+                    <div class="buttons has-addons">
+                        <button class="button is-small"
+                            :class="selectedStatus === 'alive' ? 'is-link' : 'is-light'"
+                            @click="setStatus('alive')">Alive</button>
+                        <button class="button is-small"
+                            :class="selectedStatus === 'dead' ? 'is-link' : 'is-light'"
+                            @click="setStatus('dead')">Dead</button>
+                        <button class="button is-small"
+                            :class="selectedStatus === 'unknown' ? 'is-link' : 'is-light'"
+                            @click="setStatus('unknown')">Unknown</button>
+                    </div>
+                </div>
+                <div class="level-item">
+                    <p class="subtitle is-5"><strong>Gender:</strong></p>
+                </div>
+                <div class="level-item">
+                    <div class="buttons has-addons">
+                        <button class="button is-small"
+                            :class="selectedGender === 'female' ? 'is-primary' : 'is-light'"
+                            @click="setGender('female')">Female</button>
+                        <button class="button is-small"
+                            :class="selectedGender === 'male' ? 'is-primary' : 'is-light'"
+                            @click="setGender('male')">Male</button>
+                        <button class="button is-small"
+                            :class="selectedGender === 'genderless' ? 'is-primary' : 'is-light'"
+                            @click="setGender('genderless')">Genderless</button>
+                        <button class="button is-small"
+                            :class="selectedGender === 'unknown' ? 'is-primary' : 'is-light'"
+                            @click="setGender('unknown')">Unknown</button>
+                    </div>
+                </div>
+                <div class="level-item">
+                    <button class="button is-small is-danger is-outlined" @click="clearAll">Clear All</button>
+                </div>
+            </div>
+        </nav>
 
         <div class="field has-addons">
             <div class="control is-expanded">
@@ -104,20 +173,14 @@ async function search() {
 
 
                 </li>
-                <!-- <li><button href="#" class="pagination-link" aria-label="Goto page 1">1</button></li>
-                <li><span class="pagination-ellipsis">&hellip;</span></li>
-                <li><button href="#" class="pagination-link" aria-label="Goto page 45">45</button></li>
-                <li>
-                    <button class="pagination-link is-current" aria-label="Page 46" aria-current="page">46</button>
-                </li>
-                <li><button href="#" class="pagination-link" aria-label="Goto page 47">47</button></li>
-                <li><span class="pagination-ellipsis">&hellip;</span></li>
-                <li><button href="#" class="pagination-link" aria-label="Goto page 86">86</button></li> -->
             </ul>
         </nav>
 
-        <div class="columns is-multiline">
+        <div v-if="isLoading" class="has-text-centered my-5">
+            <span class="button is-loading is-white is-large"></span>
+        </div>
 
+        <div v-else class="columns is-multiline">
             <div class="column is-3" v-for="character in characters">
                 <Charactercard :character="character"></Charactercard>
             </div>
