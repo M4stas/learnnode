@@ -10,6 +10,7 @@ import Buttons from './pages/Buttons.vue';
 import ChuckNorris from './pages/ChuckNorris.vue';
 import Rickandmorty from './pages/Rickandmorty.vue';
 import WebApis from './pages/WebApis.vue';
+
 const routes = [
     { path: '/', component: ToDo, name: 'Todolist' },
     { path: '/modals', component: Modals, name: 'Modals' },
