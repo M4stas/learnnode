@@ -8,14 +8,16 @@ import Modals from './pages/Modals.vue';
 import Messages from './pages/Messages.vue';
 import Buttons from './pages/Buttons.vue';
 import ChuckNorris from './pages/ChuckNorris.vue';
-
+import Rickandmorty from './pages/Rickandmorty.vue';
+import WebApis from './pages/WebApis.vue';
 const routes = [
     { path: '/', component: ToDo, name: 'Todolist' },
     { path: '/modals', component: Modals, name: 'Modals' },
     { path: '/messages', component: Messages, name: 'Messages' },
     { path: '/buttons', component: Buttons, name: 'Buttons' },
     { path: '/chuck', component: ChuckNorris, name: 'Chuck Norris' },
-    { path: '/rick', component: Rickandmorty, name: 'Rick and morty' }
+    { path: '/rick', component: Rickandmorty, name: 'Rick and morty' },
+    { path: '/web', component: WebApis, name: 'Webapis' }
 ]
 
 export const router = createRouter({
@@ -24,7 +26,7 @@ export const router = createRouter({
 })
 
 import App from './App.vue';
-import Rickandmorty from './pages/Rickandmorty.vue';
+
 
 const app = createApp(App);
 app.use(router)
