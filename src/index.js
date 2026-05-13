@@ -1,6 +1,5 @@
 import { createApp } from 'vue';
 
-
 import { createMemoryHistory, createWebHashHistory, createWebHistory, createRouter } from 'vue-router'
 
 import ToDo from './pages/ToDo.vue';
@@ -10,6 +9,7 @@ import Buttons from './pages/Buttons.vue';
 import ChuckNorris from './pages/ChuckNorris.vue';
 import Rickandmorty from './pages/Rickandmorty.vue';
 import WebApis from './pages/WebApis.vue';
+import leaflet from './pages/leaflet.vue';
 
 const routes = [
     { path: '/', component: ToDo, name: 'Todolist' },
@@ -18,7 +18,9 @@ const routes = [
     { path: '/buttons', component: Buttons, name: 'Buttons' },
     { path: '/chuck', component: ChuckNorris, name: 'Chuck Norris' },
     { path: '/rick', component: Rickandmorty, name: 'Rick and morty' },
-    { path: '/web', component: WebApis, name: 'Webapis' }
+    { path: '/web', component: WebApis, name: 'Webapis' },
+    { path: '/leaflet', component: Leaflet, name: 'Leaflet' }
+
 ]
 
 export const router = createRouter({
@@ -27,6 +29,7 @@ export const router = createRouter({
 })
 
 import App from './App.vue';
+import Leaflet from './pages/leaflet.vue';
 
 
 const app = createApp(App);
